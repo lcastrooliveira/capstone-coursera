@@ -1,0 +1,65 @@
+<form class="offering-form row" name="offeringform">
+  <span class="offering_id id">{{$ctrl.item.id}}</span>
+  <span class="invalid">{{$ctrl.item.errors.full_messages}}</span>
+
+  <div class="offering-caption row col-lg-12">
+    <label class="col-xs-3">Title:</label>
+    <input class="col-xs-9"
+           name="offering-title" 
+           ng-model="$ctrl.item.title" 
+           
+           maxlength="80"
+           pattern=".{5,}" title="5 character minimum for Title"/>
+    <span class="invalid">{{$ctrl.item.errors.name}}</span>
+  </div>
+
+  <div class="offering-desc row col-lg-12">
+    <label class="col-xs-3">Description:</label>
+    <textarea class="col-xs-9"
+      name="offering-desc" 
+      ng-model="$ctrl.item.desc" 
+      
+      type="text"
+      size="80"
+      maxlength="4000"/>
+    <span class="invalid">{{$ctrl.item.errors.notes}}</span>
+  </div>
+
+  <div class="offering-caption row col-lg-12">
+    <label class="col-xs-3">Owner:</label>
+    <input class="col-xs-9"
+           name="offering-owner" 
+           ng-model="$ctrl.item.owner" 
+           
+           maxlength="80"
+           pattern=".{5,}" title="5 character minimum for Owner"/>
+    <span class="invalid">{{$ctrl.item.errors.name}}</span>
+  </div>
+
+  <div class="offering-controls">
+    <span >
+      <button name="offering-create"
+              ng-show="!$ctrl.item.id"
+              type="submit"
+              ng-disabled="offeringform.$invalid"
+              ng-click="$ctrl.create()">Create Offering</button>
+
+      <span ng-show="$ctrl.item.id">
+        <button name="offering-update"
+                type="submit"
+                
+                ng-disabled="!offeringform.$dirty"
+                ng-click="$ctrl.update()">Update Offering</button>
+        <button name="offering-delete"
+                type="submit"
+                
+                ng-click="$ctrl.remove()">Delete Offering</button>
+      </span>
+    </span>
+    <button name="offering-clear"
+            type="submit"
+            ng-show="$ctrl.item.id || offeringform.$dirty"
+            ng-click="$ctrl.clear()">Clear Offering</button>
+  </div>
+
+</form>

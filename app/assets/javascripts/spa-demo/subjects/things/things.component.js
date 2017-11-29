@@ -36,6 +36,7 @@
                                    "$state","$stateParams",
                                    "spa-demo.authz.Authz",
                                    "spa-demo.subjects.Thing",
+                                   "spa-demo.subjects.ThingImage",
                                    "spa-demo.subjects.ThingImage"];
   function ThingEditorController($scope, $q, $state, $stateParams, 
                                  Authz, Thing, ThingImage) {
