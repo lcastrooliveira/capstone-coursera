@@ -1,16 +1,23 @@
 # Offerings Controller
 class OfferingsController < ApplicationController
+  include ActionController::Helpers
+  helper OfferingsHelper
   wrap_parameters :offering, include: ["title", "thing_id", "desc", "owner"]
   before_action :set_offering, only: [:show, :update, :destroy]
+  before_action :authenticate_user!
+  after_action :verify_authorized
   # before_action :set_thing, only: [:show, :update, :destroy]
 
   def index
-    @offerings = Offering.all
+    authorize Offering
+    @offerings = policy_scope(Offering.where(thing_id: params['thing_id']))
+    @offerings = OfferingPolicy.merge(@offerings)
   end
 
   def create
-    @offering = Offering.new(offering_params.merge(thing_id: params[:thing_id]))
-
+    authorize Offering
+    @offering = Offering.new(offering_params)
+    @offering.thing = Thing.find(params[:thing_id])
     if @offering.save
       render :show, status: :created, location: thing_offering_path(@offering.thing_id, @offering)
     else
@@ -18,9 +25,14 @@ class OfferingsController < ApplicationController
     end
   end
 
-  def show; end
+  def show
+    authorize @offering
+    offering = policy_scope(Offering.where(:id=>@offering.id))
+    @offering = OfferingPolicy.merge(offering).first
+  end
 
   def update
+    authorize @offering
     if @offering.update(offering_params)
       head :no_content
     else
@@ -29,6 +41,7 @@ class OfferingsController < ApplicationController
   end
 
   def destroy
+    authorize @offering
     @offering.destroy
     head :no_content
   end

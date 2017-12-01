@@ -50,3 +50,5 @@
 
 //= require spa-demo/subjects/offerings/offerings.service
 //= require spa-demo/subjects/offerings/offerings.component
+//= require spa-demo/subjects/offerings/offerings_authz.service
+//= require spa-demo/subjects/offerings/offerings_authz.directive

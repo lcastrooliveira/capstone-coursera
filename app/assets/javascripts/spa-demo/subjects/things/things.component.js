@@ -47,6 +47,7 @@
     vm.remove  = remove;
     vm.haveDirtyLinks = haveDirtyLinks;
     vm.updateImageLinks = updateImageLinks;
+    vm.goToOffering = goToOffering;
 
     vm.$onInit = function() {
       console.log("ThingEditorController",$scope);
@@ -64,6 +65,7 @@
     //////////////
     function newResource() {
       vm.item = new Thing();
+      console.log("THE THING ", vm.item);
       vm.thingsAuthz.newItem(vm.item);
       return vm.item;
     }
@@ -142,6 +144,11 @@
           clear();
         },
         handleError);
+    }
+
+    function goToOffering() {
+      console.log('gotoffering');
+      $state.go('offerings',{thing_id: vm.item.id});
     }
 
     function handleError(response) {

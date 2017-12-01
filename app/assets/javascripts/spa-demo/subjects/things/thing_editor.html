@@ -111,9 +111,12 @@
               type="submit"
               ng-show="$ctrl.authz.canDelete" 
               ng-click="$ctrl.remove()">Delete Thing</button>
-      <button name="image-clear"
+      <button name="thing-clear"
               type="submit"
               ng-click="$ctrl.clear()">Clear Thing</button>
+      <button name="thing-offerings"
+              type="submit"
+              ng-click="$ctrl.goToOffering()">Offerings</button>
     </div>
   </div>
 </form>

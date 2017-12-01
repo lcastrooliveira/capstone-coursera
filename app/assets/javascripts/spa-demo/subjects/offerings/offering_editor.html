@@ -7,7 +7,7 @@
     <input class="col-xs-9"
            name="offering-title" 
            ng-model="$ctrl.item.title" 
-           
+           ng-readonly="!$ctrl.authz.canUpdate"
            maxlength="80"
            pattern=".{5,}" title="5 character minimum for Title"/>
     <span class="invalid">{{$ctrl.item.errors.name}}</span>
@@ -18,41 +18,41 @@
     <textarea class="col-xs-9"
       name="offering-desc" 
       ng-model="$ctrl.item.desc" 
-      
+      ng-readonly="!$ctrl.authz.canUpdate"
       type="text"
       size="80"
       maxlength="4000"/>
     <span class="invalid">{{$ctrl.item.errors.notes}}</span>
   </div>
 
-  <div class="offering-caption row col-lg-12">
+  <div class="offering-caption row col-lg-12" ng-show="$ctrl.authz.canGetDetails">
     <label class="col-xs-3">Owner:</label>
     <input class="col-xs-9"
            name="offering-owner" 
            ng-model="$ctrl.item.owner" 
-           
+           ng-readonly="!$ctrl.authz.canUpdate"
            maxlength="80"
            pattern=".{5,}" title="5 character minimum for Owner"/>
     <span class="invalid">{{$ctrl.item.errors.name}}</span>
   </div>
 
   <div class="offering-controls">
-    <span >
+    <span ng-show="$ctrl.authz.authenticated">
       <button name="offering-create"
-              ng-show="!$ctrl.item.id"
               type="submit"
+              ng-show="!$ctrl.item.id && $ctrl.authz.canCreate" 
               ng-disabled="offeringform.$invalid"
               ng-click="$ctrl.create()">Create Offering</button>
 
       <span ng-show="$ctrl.item.id">
         <button name="offering-update"
                 type="submit"
-                
+                ng-show="$ctrl.authz.canUpdate" 
                 ng-disabled="!offeringform.$dirty"
                 ng-click="$ctrl.update()">Update Offering</button>
         <button name="offering-delete"
                 type="submit"
-                
+                ng-show="$ctrl.authz.canDelete" 
                 ng-click="$ctrl.remove()">Delete Offering</button>
       </span>
     </span>

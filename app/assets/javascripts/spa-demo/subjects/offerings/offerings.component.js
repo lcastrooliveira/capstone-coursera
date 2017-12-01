@@ -15,6 +15,9 @@
       controller: OfferingEditorController,
       bindings: {
         authz: "<"
+      },
+      require: {
+        offeringsAuthz: "^sdOfferingsAuthz"
       }      
     });
 
@@ -75,7 +78,7 @@
       function newResource(thing_id) {
         console.log("newResource()");
         vm.item = new Offering({thing_id: thing_id});
-        // vm.imagesAuthz.newItem(vm.item);
+        vm.offeringsAuthz.newItem(vm.item);
         console.log('new Id', vm.item);
         return vm.item;
       }
@@ -84,7 +87,7 @@
         var itemId = offeringId ? offeringId : vm.item.id;
         // console.log("re/loading image", itemId);
         vm.item = Offering.get({thing_id: thing_id, id:itemId});
-        //vm.imagesAuthz.newItem(vm.item);
+        vm.offeringsAuthz.newItem(vm.item);
         vm.item.$promise.catch(handleError);
       }
 
@@ -121,8 +124,8 @@
             clear();
           },
           handleError);      
-      }  
-  
+      }
+
       function handleError(response) {
         console.log("error", response);
         if (response.data) {
